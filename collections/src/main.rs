@@ -32,4 +32,24 @@ fn main() {
         println!("Vector item: {}", item);
     }
 
+    let mut s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    s1 = s1 + &s2;
+    println!("s1: {}", s1);
+
+    let first_name = String::from("Jan");
+    let last_name = String::from("Kowalski");
+    let full_name = format!("{} {}", first_name, last_name);
+    println!("first name: {}", first_name);
+    println!("last name: {}", last_name);
+    println!("full name: {}", full_name);
+
+    for c in "नमस्ते".chars() {
+        println!("{}", c);
+    }
+
+    for b in "नमस्ते".bytes() {
+        println!("{}", b);
+    }
+
 }
