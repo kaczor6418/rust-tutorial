@@ -21,6 +21,7 @@ impl<T> Point<T> {
 }
 
 fn main() {
+    //traits
 //    let mut numbers: Vec<i32> = vec![1, 12, 83, 32, 5];
 //    let mut characters: Vec<char> = vec!['b', 'c', 'd', 'a'];
 //    println!("Largest number: {}", largest(&numbers));
