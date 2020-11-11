@@ -1,37 +1,39 @@
-struct Point<T> {
-    x: T,
-    y: T,
+enum Option<T> {
+    SOME(T), // if there will be a value, value will be typed as T
+    NOE,
 }
 
-// impl<T> Point<T> {
-//     fn new(x: T, y: T) -> Point<T> {
-//         return Point {
-//             x,
-//             y,
-//         };
-//     }
-//
-//     pub fn x_difference(&self, target_point: Point<T>) -> T {
-//         return (self.x - target_point.x).abs();
-//     }
-//
-//     pub fn y_difference(&self, target_point: Point<T>) -> T {
-//         return (self.y - target_point.y).abs();
-//     }
-// }
+enum Result<T, E> {
+    OK(T),    // if operation will not throw an error you will get value typed as T
+    ERROR(E), // if operation will occurred an error you will get value typed as E (special error type)
+}
+
+struct Point<T, U> {
+    x: T,
+    y: U,
+}
+
+impl<T, U> Point<T, U> {
+    fn new(x: T, y: U) -> Point<T, U> {
+        return Point { x, y };
+    }
+}
+
+impl Point<f64, f64> {
+    fn get_distance(&self, point_b: &Point<f64, f64>) -> f64 {
+        return ((point_b.x - self.x).powf(2.0) + (point_b.y - self.y).powf(2.0)).sqrt();
+    }
+}
+
+// fn get_distance<T>(point_a: &Point<T>, point_b: &Point<T>) -> T {}
 
 fn main() {
-    //traits
-//    let mut numbers: Vec<i32> = vec![1, 12, 83, 32, 5];
-//    let mut characters: Vec<char> = vec!['b', 'c', 'd', 'a'];
-//    println!("Largest number: {}", largest(&numbers));
-//    println!("Largest character: {}", largest(&characters));
-    let int_point1: Point<i32> = Point::new(12, 11); // Coordinates of this point can be only integer values
-    let int_point2: Point<i32> = Point::new(-52, 41);
-    let floating_point1: Point<f32> = Point::new(12.32, 54.11); // Coordinates of this point can be only floats values
-    let floating_point2: Point<f32> = Point::new(14.32, -14.11);
-    println!("X difference between int points: {:?}", int_point1.x_difference(int_point2));
-    // println!("Y difference between int points: {:?}", int_point1.y_difference(int_point2));
-    // println!("X difference between floating points: {:?}", floating_point1.x_difference(floating_point2));
-    // println!("Y difference between floating points: {:?}", floating_point1.y_difference(floating_point2));
+    let integer_point = Point::new(5, 12);
+    let float_integer_point = Point::new(5, 12.1);
+    let float_point_1 = Point::new(5.12, 12.32);
+    let float_point_2 = Point::new(4.12, 8.32);
+    println!(
+        "Distance between two points: {}",
+        float_point_1.get_distance(&float_point_2)
+    );
 }
