@@ -68,6 +68,8 @@ fn accepts_only_shapes(shape: &impl Shape) {
     println!("{}", shape.common_method())
 }
 
+// trait bound syntax
+
 fn main() {
     let square = Square { a: 2.0 }; // circuit: 8, area: 4
     let rectangle = Rectangle { a: 2.0, b: 3.0 }; // circuit: 10, area: 6
