@@ -25,6 +25,16 @@ impl Point<f64, f64> {
     }
 }
 
+fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
+    let mut largest = list[0];
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
 // fn get_distance<T>(point_a: &Point<T>, point_b: &Point<T>) -> T {}
 
 fn main() {
@@ -36,4 +46,11 @@ fn main() {
         "Distance between two points: {}",
         float_point_1.get_distance(&float_point_2)
     );
+    // Traits bonds + generics
+    let number_list = vec![34, 50, 25, 100, 65];
+    let result = largest(&number_list);
+    println!("The largest number is {}", result);
+    let char_list = vec!['y', 'm', 'a', 'q'];
+    let result = largest(&char_list);
+    println!("The largest char is {}", result);
 }
