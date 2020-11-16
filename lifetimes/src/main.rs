@@ -64,13 +64,16 @@ impl<'a> ImportantExcerpt<'a> {
         return self.part;
     }
 
-    /// Will throw an error because `announcement` is in different lifetime then **`self`**
-    fn return_announcement(&self, announcement: &str) -> &str {
-        return announcement;
-    }
+    // Will throw an error because `announcement` is in different lifetime then **`self`**
+    // fn return_announcement(&self, announcement: &str) -> &str {
+    //     return announcement;
+    // }
 }
 
 fn main() {
+    /// static lifetime gives a guarantee that variable will be stored directly in program binary. Before you use this lifetime you should think twice because it will make your program to weight more
+    let i_will_never_die: &'static str = "I have a static lifetime.";
+
     // Lifetimes in methods
     correct_lifetime1();
     correct_lifetime2();
