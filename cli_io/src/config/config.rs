@@ -23,11 +23,11 @@ impl Config {
         let provided_arguments_count: usize = user_input.len();
         if provided_arguments_count < 2 {
             result =
-                "Not enough arguments. You have to provide two arguments: query and file name.";
+                "Not enough arguments. You have to provide at least two arguments: query and file name.";
         } else if provided_arguments_count == 3 && user_input[2] != Config::INSENSITIVE {
             result = "Invalid flag";
         } else if provided_arguments_count > 3 {
-            result = "Too many arguments. You have to provide two arguments: query and file name!";
+            result = "Too many arguments. You have to provide maximum three arguments: query, file name, flag.";
         }
         return result;
     }

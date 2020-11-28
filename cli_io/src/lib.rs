@@ -12,12 +12,10 @@ pub fn run(user_input: &Vec<String>) -> Result<(), Box<dyn Error>> {
     let config = match Config::new(&user_input) {
         Ok(valid_config) => valid_config,
         Err(error_message) => {
-            println!("{}", error_message);
+            eprintln!("{}", error_message);
             exit(2);
         }
     };
-    println!("Searching for: {}", config.query);
-    println!("In file: {}", config.file_name);
     let content = read_from_file(config.file_name)?;
     let search_engine = SearchEngine::new(&config.query, &content);
     let search_result: Vec<&str> = if config.insensitive {

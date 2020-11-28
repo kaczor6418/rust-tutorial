@@ -8,7 +8,7 @@ fn main() {
     match run(&user_input) {
         Ok(()) => exit(0),
         Err(error) => {
-            println!("Application has finished with error: {}", error);
+            eprintln!("Application has finished with error: {}", error);
             exit(2);
         }
     };
