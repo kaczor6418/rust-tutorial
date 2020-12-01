@@ -17,25 +17,24 @@ where
     U: Eq + Hash + Clone,
 {
     fn new(calculation: T) -> Cacher<T, U> {
-        Cacher {
+        return Cacher {
             calculation,
             values: HashMap::new(),
-        }
+        };
     }
 
     fn value(&mut self, arg: U) -> U {
-        let result = self.values.get(&arg);
-        match result {
+        let value_ref = &mut self.values;
+        let calculation_ref = &self.calculation;
+        let result = value_ref.get(&arg);
+        return match result {
             Some(v) => v.clone(),
             None => self
                 .values
-                .insert(arg.clone(), (self.calculation)(arg.clone()))
-                .unwrap_or_else(|| {
-                    eprintln!("error occurred");
-                    return arg;
-                })
+                .entry(arg.clone())
+                .or_insert_with(|| (calculation_ref)(arg.clone()))
                 .clone(),
-        }
+        };
     }
 }
 
