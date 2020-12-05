@@ -12,23 +12,19 @@ impl SearchEngine {
     }
 
     pub fn search(&self) -> Vec<&str> {
-        let mut search_result: Vec<&str> = vec![];
-        for line in self.content.lines() {
-            if line.contains(&self.query) {
-                search_result.push(line)
-            }
-        }
-        return search_result;
+        return self
+            .content
+            .lines()
+            .filter(|line| line.contains(&self.query))
+            .collect();
     }
 
     pub fn insensitive_search(&self) -> Vec<&str> {
-        let mut search_result: Vec<&str> = vec![];
-        for line in self.content.lines() {
-            if line.to_lowercase().contains(&self.query.to_lowercase()) {
-                search_result.push(line)
-            }
-        }
-        return search_result;
+        return self
+            .content
+            .lines()
+            .filter(|line| line.to_lowercase().contains(&self.query.to_lowercase()))
+            .collect();
     }
 }
 

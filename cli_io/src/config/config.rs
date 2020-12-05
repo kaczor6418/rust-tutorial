@@ -6,30 +6,34 @@ pub struct Config {
 
 impl Config {
     pub const INSENSITIVE: &'static str = "--insensitive";
-    pub fn new(user_input: &Vec<String>) -> Result<Config, &str> {
-        let error_message = Config::is_valid_input(user_input);
-        if error_message.len() > 0 {
-            return Err(error_message);
+    pub fn new(user_input: &Vec<String>) -> Result<Config, &'static str> {
+        let mut user_input_iterator = user_input.iter();
+        let query = match user_input_iterator.next() {
+            Some(arg1) => String::from(arg1),
+            None => return Err("You have to provide query string"),
+        };
+        let file_name = match user_input_iterator.next() {
+            Some(arg2) => String::from(arg2),
+            None => return Err("You have to provide file name"),
+        };
+        let insensitive = match user_input_iterator.next() {
+            Some(arg3) => {
+                if arg3 == Config::INSENSITIVE {
+                    true
+                } else {
+                    return Err("Invalid flag");
+                }
+            }
+            None => false,
+        };
+        if user_input_iterator.next().is_some() {
+            return Err("Too many arguments");
         }
         return Ok(Config {
-            query: user_input[0].clone(),
-            file_name: user_input[1].clone(),
-            insensitive: user_input.contains(&String::from(Config::INSENSITIVE)),
+            query,
+            file_name,
+            insensitive,
         });
-    }
-
-    fn is_valid_input(user_input: &Vec<String>) -> &str {
-        let mut result = "";
-        let provided_arguments_count: usize = user_input.len();
-        if provided_arguments_count < 2 {
-            result =
-                "Not enough arguments. You have to provide at least two arguments: query and file name.";
-        } else if provided_arguments_count == 3 && user_input[2] != Config::INSENSITIVE {
-            result = "Invalid flag";
-        } else if provided_arguments_count > 3 {
-            result = "Too many arguments. You have to provide maximum three arguments: query, file name, flag.";
-        }
-        return result;
     }
 }
 
