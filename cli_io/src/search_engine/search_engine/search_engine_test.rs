@@ -90,3 +90,41 @@ mod case_insensitive {
         assert_eq!(vec![first_line(), third_line()], search_result);
     }
 }
+
+mod regex {
+    use crate::search_engine::search_engine::search_engine_test::{
+        create_search_engine, first_line, third_line,
+    };
+
+    #[test]
+    fn should_not_contain_any_result_for_zero_matches() {
+        let search_value = "nEveR.*";
+        let search_engine = create_search_engine(search_value);
+        let search_result = search_engine.regex_search(false);
+        assert!(search_result.is_empty());
+    }
+
+    #[test]
+    fn should_contain_only_one_result_for_one_match() {
+        let search_value = "dog";
+        let search_engine = create_search_engine(search_value);
+        let search_result = search_engine.regex_search(false);
+        assert_eq!(vec![first_line()], search_result);
+    }
+
+    #[test]
+    fn should_contain_one_result_for_one_match_case_insensitive() {
+        let search_value = "DoG";
+        let search_engine = create_search_engine(search_value);
+        let search_result = search_engine.insensitive_search();
+        assert_eq!(vec![first_line()], search_result);
+    }
+
+    #[test]
+    fn should_contain_many_results_for_many_matches() {
+        let search_value = "sAMe";
+        let search_engine = create_search_engine(search_value);
+        let search_result = search_engine.regex_search(true);
+        assert_eq!(vec![first_line(), third_line()], search_result);
+    }
+}
