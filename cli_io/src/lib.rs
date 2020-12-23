@@ -11,7 +11,11 @@ pub fn run(user_input: Vec<String>) -> Result<(), Box<dyn Error>> {
     let config = Config::new(&user_input)?;
     let content = read_from_file(config.file_name)?;
     let search_engine = SearchEngine::new(&config.query, &content);
-    let search_result: Vec<&str> = if config.insensitive {
+    let search_result: Vec<&str> = if config.insensitive && config.regex {
+        search_engine.regex_search(true)
+    } else if config.regex {
+        search_engine.regex_search(false)
+    } else if config.insensitive {
         search_engine.insensitive_search()
     } else {
         search_engine.search()
