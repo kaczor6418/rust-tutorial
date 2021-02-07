@@ -1,4 +1,5 @@
-use std::sync::mpsc;
+use std::rc::Rc;
+use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -102,4 +103,37 @@ fn main() {
         println!("MAIN THREAD MESSAGE: {}", message);
     }
     message_listener.join().unwrap();
+
+    println!("\n");
+    println!("---------------------------------- Shared state (Mutex):");
+    let shared_value = Mutex::new(5);
+    {
+        let mut num = shared_value.lock().unwrap();
+        *num = 6;
+    }
+    println!("m = {:?}", shared_value);
+
+    println!("\n");
+    println!("---------------------------------- Shared state in multiple threads:");
+    let counter = Arc::new(Mutex::new(0));
+    let mut threads_handlers = vec![];
+
+    for i in 0..10 {
+        let counter_pointer = Arc::clone(&counter);
+        let thread_handler = thread::spawn(move || {
+            println!("THREAD NO: {}", i);
+            let mut mutable_counter = counter_pointer.lock().unwrap();
+            *mutable_counter += 1;
+        });
+        threads_handlers.push(thread_handler);
+    }
+
+    for thread_handler in threads_handlers {
+        thread_handler.join().unwrap();
+    }
+
+    println!(
+        "After all threads finish their work: {}",
+        *counter.lock().unwrap()
+    );
 }
