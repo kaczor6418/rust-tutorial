@@ -11,6 +11,7 @@ fn main() {
             thread::sleep(Duration::from_millis(1));
         }
     });
+
     thread_handler.join().unwrap(); // before this thread wont be finished code under will not execute
     for i in 1..5 {
         println!("hi number {} from the main thread!", i);
