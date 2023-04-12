@@ -6,7 +6,7 @@ fn main() {
     println!("Guess the number!");
     println!("Please input your guess.");
 
-    let secret_number: i32 = rand::thread_rng().gen_range(1, 101);
+    let secret_number: i32 = rand::thread_rng().gen_range(1..=100);
 
     loop {
         let mut guess: String = String::new();
@@ -14,12 +14,15 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line");
 
-        let converted_guess: i32 = match guess.trim().parse() {
+        let guess: i32 = match guess.trim().parse() {
             Ok(num) => num,
-            Err(_) => continue,
+            Err(_) => {
+                println!("Please type a number!");
+                continue;
+            },
         };
 
-        match converted_guess.cmp(&secret_number) {
+        match guess.cmp(&secret_number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {
@@ -27,13 +30,5 @@ fn main() {
                 break;
             }
         };
-
-        if converted_guess == secret_number {
-            println!("You guess the number: {}", converted_guess);
-        } else if secret_number < converted_guess {
-            println!("Your number is too big: {}", converted_guess);
-        } else {
-            println!("Your number is too small: {}", converted_guess);
-        }
     }
 }
