@@ -1,6 +1,8 @@
 fn main() {
     char_function('t');
     i32_function(12);
+    time(12, "hours");
+    println!("Expression implicitly: {}", expression_implicitly());
     let x = {
         let y = 3;
         y + 1
@@ -18,4 +20,13 @@ fn char_function(value: char) -> char {
 fn i32_function(value: i32) -> i32 {
     println!("i32 value: {}", value);
     return value;
+}
+
+fn  time(value: i32, unit: &str) {
+    println!("It is {} {}", value, unit);
+}
+
+// If last line of function doesn't contains semicolon it is treated as returned value
+fn expression_implicitly() -> i32 {
+    12
 }

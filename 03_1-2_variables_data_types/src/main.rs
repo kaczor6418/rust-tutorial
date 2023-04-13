@@ -6,21 +6,19 @@ fn main() {
 fn variables() {
     const X: u8 = 5;
     println!("x: {}", X);
-    let mut y: u8 = 5;
+    let mut y = 5;
     println!("y: {}", y);
     y = 4;
     println!("y: {}", y);
 
     let z = 1;
     println!("z: {}", z);
-    let z = 12;
+    let z = 0.1 + 0.2;
     println!("z: {}", z);
 }
 
 
 fn data_types() {
-    let guess: u32 = "42".parse().expect("Not a number!");
-
     let tup: (i32, char, f32) = (200, 'a', 21.32);
     println!("tup i32: {}", tup.0);
     println!("tup char: {}", tup.1);
@@ -33,5 +31,9 @@ fn data_types() {
     println!("arr idx 2: {}", arr[2]);
     println!("arr idx 3: {}", arr[3]);
 
-    let same_val_arr: [i32; 3] = [3; 3];
+    // Fill array with given number [5, 5, 5]
+    let same_val_arr: [i32; 3] = [5; 3];
+    println!("tuple idx 0: {}", same_val_arr[0]);
+    println!("tuple idx 1: {}", same_val_arr[1]);
+    println!("tuple idx 2: {}", same_val_arr[2]);
 }
